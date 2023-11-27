@@ -7,8 +7,8 @@ import android.os.Bundle;
 
 import com.sync.tak.plugin.PluginLifecycle;
 
-import utils.CotUtil;
-import utils.ModemCotUtility;
+import com.sync.tak.utils.CotUtil;
+import com.sync.tak.utils.ModemCotUtility;
 
 import com.sync.tak.receivers.ReadMeReceiver;
 import com.sync.tak.receivers.SendChatDropDownReceiver;

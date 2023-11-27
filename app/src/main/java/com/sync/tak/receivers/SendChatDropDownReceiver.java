@@ -31,9 +31,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import utils.DropDownManager;
-import utils.MapItems;
-import utils.ModemCotUtility;
+import com.sync.tak.utils.DropDownManager;
+import com.sync.tak.utils.MapItems;
+import com.sync.tak.utils.ModemCotUtility;
 
 public class SendChatDropDownReceiver extends DropDownReceiver implements ModemCotUtility.ChatMessageListener {
     public static final String TAG = ViewCoTMarkersReceiver.class

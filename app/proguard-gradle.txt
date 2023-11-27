@@ -28,8 +28,6 @@
     public static ** valueOf(java.lang.String);
 }
 
-
-
 # Preserve all native method names and the names of their classes.
 -keepclasseswithmembernames class * {
     native <methods>;
@@ -45,8 +43,6 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
-
-
 
 -keep class * extends transapps.maps.plugin.tool.Tool {
 }

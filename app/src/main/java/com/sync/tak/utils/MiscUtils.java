@@ -24,7 +24,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-package utils;
+package com.sync.tak.utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;

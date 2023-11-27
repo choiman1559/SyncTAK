@@ -1,4 +1,4 @@
-package utils;
+package com.sync.tak.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

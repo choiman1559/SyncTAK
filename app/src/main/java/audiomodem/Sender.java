@@ -6,7 +6,7 @@ import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import utils.ModemCotUtility;
+import com.sync.tak.utils.ModemCotUtility;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

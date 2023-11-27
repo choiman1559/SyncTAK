@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
-ext.PLUGIN_VERSION_NAME = "1.0.0"
-ext.PLUGIN_VERSION_CODE = "010000"
+ext.PLUGIN_VERSION_NAME = "1.0.1"
+ext.PLUGIN_VERSION_CODE = "010001"
 ext.ATAK_VERSION = "4.6.0.5"
 
 buildscript {
@@ -44,6 +44,45 @@ buildscript {
             classpath "com.atakmap.gradle:atak-gradle-takdev:${takdevVersion}"
         }
     }
+}
+
+def getVersionName() {
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short=8', 'HEAD'
+            standardOutput = stdout
+        }
+        def describe = stdout.toString().trim()
+        println("versionName[git]: $describe")
+        return describe
+    } catch (Exception ignored) {
+        println("error occured, using revision of 1")
+        return 1
+    }
+}
+
+def getVersionCode() {
+    try {
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                executable = 'git'
+                args = ['show', '-s', '--format=%ct']
+                standardOutput = os
+                ignoreExitValue = true
+            }
+
+            def outputAsString = os.toString()
+            ext.revision = "$outputAsString".toInteger()
+
+            println("version[git]: $revision")
+        }
+    } catch (Exception ignored) {
+        println("error occured, using revision of 1")
+        ext.revision = 1
+    }
+
+    return revision
 }
 
 allprojects {
@@ -91,9 +130,9 @@ android {
 
     sourceSets {
         main {
-            setProperty("archivesBaseName", "ATAK-Plugin-" + rootProject.name + "-" + PLUGIN_VERSION_NAME + "-" + PLUGIN_VERSION_CODE + "-" + ATAK_VERSION)
-            defaultConfig.versionCode = Integer.parseInt(PLUGIN_VERSION_CODE)
-            defaultConfig.versionName = PLUGIN_VERSION_NAME
+            setProperty("archivesBaseName", "ATAK-Plugin-" + rootProject.name + "-" + PLUGIN_VERSION_CODE + "-" + getVersionName() + "-" + ATAK_VERSION)
+            defaultConfig.versionCode = getVersionCode()
+            defaultConfig.versionName = PLUGIN_VERSION_NAME + " (" + getVersionName() + ") - [" + ATAK_VERSION + "]"
         }
 
         debug.setRoot('build-types/debug')

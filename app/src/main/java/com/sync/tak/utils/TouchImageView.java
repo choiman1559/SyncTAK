@@ -1,4 +1,4 @@
-package utils;
+package com.sync.tak.utils;
 
 import android.content.Context;
 import android.graphics.Matrix;

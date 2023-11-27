@@ -22,7 +22,7 @@ import com.atakmap.android.dropdown.DropDown.OnStateListener;
 import com.sync.tak.R;
 import com.atakmap.coremap.log.Log;
 
-import utils.ModemCotUtility;
+import com.sync.tak.utils.ModemCotUtility;
 
 public class CoTUtilityDropDownReceiver extends DropDownReceiver implements
         OnStateListener{

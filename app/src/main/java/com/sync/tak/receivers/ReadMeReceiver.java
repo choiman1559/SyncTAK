@@ -13,7 +13,7 @@ import com.atakmap.android.ipc.AtakBroadcast;
 import com.atakmap.android.maps.MapView;
 import com.atakmap.coremap.log.Log;
 
-import utils.DropDownManager;
+import com.sync.tak.utils.DropDownManager;
 
 public class ReadMeReceiver extends DropDownReceiver implements DropDown.OnStateListener {
     public static final String TAG = CoTUtilityDropDownReceiver.class

@@ -16,8 +16,8 @@ import com.atakmap.android.dropdown.DropDownReceiver;
 import com.atakmap.android.ipc.AtakBroadcast;
 import com.atakmap.android.maps.MapView;
 import com.atakmap.coremap.log.Log;
-import utils.DropDownManager;
-import utils.ModemCotUtility;
+import com.sync.tak.utils.DropDownManager;
+import com.sync.tak.utils.ModemCotUtility;
 
 public class SettingsReceiver extends DropDownReceiver {
     public static final String TAG = SettingsReceiver.class

@@ -20,9 +20,9 @@ import com.atakmap.coremap.log.Log;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import utils.DropDownManager;
-import utils.MapItems;
-import utils.ModemCotUtility;
+import com.sync.tak.utils.DropDownManager;
+import com.sync.tak.utils.MapItems;
+import com.sync.tak.utils.ModemCotUtility;
 
 public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
         DropDown.OnStateListener {

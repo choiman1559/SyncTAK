@@ -11,7 +11,7 @@ import com.atakmap.android.dropdown.DropDown;
 import com.atakmap.android.dropdown.DropDownReceiver;
 import com.atakmap.android.maps.MapView;
 
-import utils.MiscUtils;
+import com.sync.tak.utils.MiscUtils;
 
 public abstract class ViewTableReceiver extends DropDownReceiver implements DropDown.OnStateListener {
     public static final String LIGHTER_GRAY = "#f8f8f8";
