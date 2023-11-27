@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.atakmap.android.cot_utility.CoTPositionTool;
+import com.sync.tak.CoTPositionTool;
 import com.atakmap.android.dropdown.DropDown;
 import com.atakmap.android.dropdown.DropDownReceiver;
 import com.atakmap.android.importexport.CotEventFactory;
@@ -122,7 +122,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
         if (action != null && action
-                .equals("com.atakmap.android.cot_utility.receivers.cotMenu")) {
+                .equals("com.sync.tak.receivers.cotMenu")) {
             PointMapItem temp = findTarget(intent.getStringExtra("targetUID"));
             if (temp != null) {
                 stopListener();

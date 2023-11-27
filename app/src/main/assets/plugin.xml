@@ -4,12 +4,12 @@
 
     <extension
         type="transapps.maps.plugin.lifecycle.Lifecycle"
-        impl="com.atakmap.android.cot_utility.plugin.PluginLifecycle"
+        impl="com.sync.tak.plugin.PluginLifecycle"
         singleton="true" />
 
     <extension
         type="transapps.maps.plugin.tool.ToolDescriptor"
-        impl="com.atakmap.android.cot_utility.plugin.PluginTool"
+        impl="com.sync.tak.plugin.PluginTool"
         singleton="true" />
 
 </plugin>

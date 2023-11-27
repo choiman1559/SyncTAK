@@ -2,7 +2,7 @@ package utils;
 
 import android.util.Log;
 
-import com.atakmap.android.cot_utility.receivers.CoTUtilityDropDownReceiver;
+import com.sync.tak.receivers.CoTUtilityDropDownReceiver;
 
 import java.util.List;
 import java.util.Stack;

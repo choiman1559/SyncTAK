@@ -52,7 +52,7 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <item name="android:buttonStyle">@android:style/Widget.Button</item>
         <item name="android:imageButtonStyle">@android:style/Widget.Button</item>
         <item name="android:buttonStyleToggle">@android:style/Widget.Button</item>
@@ -60,7 +60,6 @@
         <item name="android:spinnerItemStyle">@style/ATAKSpinnerItem</item>
         <item name="android:editTextStyle">@style/ATAKEditText</item>
     </style>
-
 
     <style name="ATAKSpinner" parent="@android:style/Widget.Spinner">
         <item name="android:spinnerMode">dialog</item>
