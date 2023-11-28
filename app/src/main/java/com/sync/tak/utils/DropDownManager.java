@@ -10,7 +10,7 @@ import java.util.Stack;
 public class DropDownManager {
     private static final String TAG = DropDownManager.class.getSimpleName();
     private static DropDownManager dropDownManager;
-    private List<String> backstack;
+    private final List<String> backstack;
 
     public static synchronized DropDownManager getInstance() {
         if (dropDownManager == null) {
@@ -34,12 +34,11 @@ public class DropDownManager {
     /**
      * Removes an intent action to display a receiver from the back stack
      */
-    public String removeFromBackStack() {
+    public void removeFromBackStack() {
         if (!backstack.isEmpty()) {
-            return backstack.remove(backstack.size()-1);
+            backstack.remove(backstack.size() - 1);
         } else {
             Log.w(TAG, "Back stack is empty");
-            return CoTUtilityDropDownReceiver.SHOW_PLUGIN;
         }
     }
 

@@ -3,6 +3,7 @@ package com.sync.tak.plugin;
 
 import java.io.File;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 /**
@@ -10,7 +11,6 @@ import android.content.Context;
  */
 public class PluginNativeLoader {
 
-    private static final String TAG = "NativeLoader";
     private static String ndl = null;
 
     /**
@@ -22,11 +22,8 @@ public class PluginNativeLoader {
     synchronized static public void init(final Context context) {
         if (ndl == null) {
             try {
-                final String nativeDir = context.getPackageManager()
-                        .getApplicationInfo(context.getPackageName(),
-                                0).nativeLibraryDir;
-
-                ndl = nativeDir;
+                ndl = context.getPackageManager()
+                        .getApplicationInfo(context.getPackageName(), 0).nativeLibraryDir;
             } catch (Exception e) {
                 throw new IllegalArgumentException(
                         "native library loading will fail, unable to grab the nativeLibraryDir from the package name");
@@ -42,13 +39,14 @@ public class PluginNativeLoader {
     * manipulated. Use only validated, sanitized absolute paths.
     */
 
+    @SuppressWarnings("unused")
+    @SuppressLint("UnsafeDynamicallyLoadedCode")
     public static void loadLibrary(final String name) {
         if (ndl != null) {
             final String lib = ndl + File.separator
                     + System.mapLibraryName(name);
             if (new File(lib).exists()) {
                 System.load(lib);
-                return;
             }
         } else {
             throw new IllegalArgumentException("NativeLoader not initialized");

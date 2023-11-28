@@ -10,6 +10,8 @@ import com.atakmap.android.maps.MapView;
 import com.sync.tak.CoTUtilityMapComponent;
 
 import transapps.maps.plugin.lifecycle.Lifecycle;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,6 +22,7 @@ public class PluginLifecycle implements Lifecycle {
     private final Context pluginContext;
     private final Collection<MapComponent> overlays;
     private MapView mapView;
+    @SuppressLint("StaticFieldLeak")
     public static Activity activity;
 
     private final static String TAG = PluginLifecycle.class
@@ -27,7 +30,7 @@ public class PluginLifecycle implements Lifecycle {
 
     public PluginLifecycle(Context ctx) {
         this.pluginContext = ctx;
-        this.overlays = new LinkedList<MapComponent>();
+        this.overlays = new LinkedList<>();
         this.mapView = null;
         PluginNativeLoader.init(ctx);
     }

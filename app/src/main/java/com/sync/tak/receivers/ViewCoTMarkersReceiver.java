@@ -1,5 +1,6 @@
 package com.sync.tak.receivers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -35,11 +36,12 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
     private final View cotView;
     private final Context pluginContext;
 
-    private GridLayout table;
-    private MapView mapView;
+    private final GridLayout table;
+    private final MapView mapView;
     private LinkedHashSet<MapItem> cotMapItems;
     private Intent intent;
 
+    @SuppressLint("InflateParams")
     public ViewCoTMarkersReceiver(MapView mapView, Context context) {
         super(mapView, context);
         this.pluginContext = context;
@@ -47,7 +49,7 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         cotView = inflater.inflate(R.layout.map_cot_items, null);
         this.mapView = mapView;
-        table = (GridLayout) cotView.findViewById(R.id.table);
+        table = cotView.findViewById(R.id.table);
         cotMapItems = new LinkedHashSet<>();
     }
 
@@ -71,23 +73,14 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
                     HALF_HEIGHT, false);
 
             ImageButton backButton = cotView.findViewById(R.id.backButtonMapItemsView);
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ViewCoTMarkersReceiver.this.onBackButtonPressed();
-                }
-            });
-
+            backButton.setOnClickListener(v -> ViewCoTMarkersReceiver.this.onBackButtonPressed());
             Button selfLocationButton = cotView.findViewById(R.id.selfLocationBtn);
-            selfLocationButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    android.util.Log.d(TAG, "sending self position");
-                    ModemCotUtility.getInstance(mapView, pluginContext).stopListener();
-                    ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapView.getSelfMarker());
-                    Toast toast = Toast.makeText(context, "sending self marker", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+            selfLocationButton.setOnClickListener(view -> {
+                android.util.Log.d(TAG, "sending self position");
+                ModemCotUtility.getInstance(mapView, pluginContext).stopListener();
+                ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapView.getSelfMarker());
+                Toast toast = Toast.makeText(context, "sending self marker", Toast.LENGTH_SHORT);
+                toast.show();
             });
 
             cotMapItems = MapItems.getCursorOnTargetMapItems(mapView);
@@ -125,12 +118,9 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
             table.addView(mapItemName, nameParams);
             table.addView(mapItemInfo, typeParams);
 
-            mapItemName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ModemCotUtility.getInstance(mapView, pluginContext).stopListener();
-                    ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapItem);
-                }
+            mapItemName.setOnClickListener(view -> {
+                ModemCotUtility.getInstance(mapView, pluginContext).stopListener();
+                ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapItem);
             });
 
             i++;

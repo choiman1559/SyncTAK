@@ -4,6 +4,7 @@ import com.sync.tak.R;
 import com.sync.tak.receivers.CoTUtilityDropDownReceiver;
 import com.atakmap.android.ipc.AtakBroadcast;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+
+import androidx.appcompat.content.res.AppCompatResources;
 
 import transapps.mapi.MapView;
 import transapps.maps.plugin.tool.Group;
@@ -20,6 +23,8 @@ import transapps.maps.plugin.tool.ToolDescriptor;
 public class PluginTool extends Tool implements ToolDescriptor {
     private static final String TAG = PluginTool.class.getSimpleName();
     private final Context context;
+
+    @SuppressLint("StaticFieldLeak")
     public static Activity activity;
 
     public PluginTool(Context context) {
@@ -33,8 +38,7 @@ public class PluginTool extends Tool implements ToolDescriptor {
 
     @Override
     public Drawable getIcon() {
-        return (context == null) ? null
-                : context.getResources().getDrawable(R.drawable.hammer);
+        return (context == null) ? null : AppCompatResources.getDrawable(context, R.drawable.hammer);
     }
 
     @Override

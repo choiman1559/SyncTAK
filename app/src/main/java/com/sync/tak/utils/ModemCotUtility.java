@@ -1,5 +1,6 @@
 package com.sync.tak.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -26,10 +27,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import audiomodem.Receiver;
-import audiomodem.Result;
-import audiomodem.Sender;
-
+import com.sync.tak.comms.Receiver;
+import com.sync.tak.comms.Result;
+import com.sync.tak.comms.Sender;
 
 public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStateListener, MapEventDispatcher.MapEventDispatchListener  {
     public static final String TAG = ModemCotUtility.class
@@ -145,6 +145,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
     /**
      * Start the CoT stream listener
      */
+    @SuppressLint("StaticFieldLeak")
     public void startListener(){
         isReceiving = true;
         android.util.Log.d(TAG, "startCotListener");
@@ -181,7 +182,9 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         if(rx == null){
             return;
         }
-        rx.stop();
+
+        //TODO WTF is stopping listener?
+        //rx.stop();
         rx.cancel(true);
     }
 
@@ -313,7 +316,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
 
         android.util.Log.d(TAG, "sending " + (useAbbreviatedCoT ? "abbreviated" : "non-abbreviated") + " COT: " + cotEvent.toString());
         Sender modemSender = new Sender(this);
-        modemSender.execute(padding + cotEvent.toString());
+        modemSender.execute(padding + cotEvent);
     }
 
     public void sendChat(String message, String callsignToSendTo){

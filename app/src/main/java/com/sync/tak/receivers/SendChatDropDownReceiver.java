@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sync.tak.Application;
 import com.sync.tak.plugin.PluginLifecycle;
 import com.sync.tak.R;
 import com.atakmap.android.dropdown.DropDownReceiver;
@@ -139,7 +140,7 @@ public class SendChatDropDownReceiver extends DropDownReceiver implements ModemC
                 if(mapItem.getType().contains("-U") || mapItem.getType().startsWith("U-")) {
                     if(!mapItem.getTitle().equals(myCallsign)) {
                         callsigns.add(mapItem.getTitle());
-                        SharedPreferences sharedPref = PluginLifecycle.activity.getSharedPreferences("hammer-prefs", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = Application.getPreferences(PluginLifecycle.activity);
                         String chatHistoryForCallsign = sharedPref.getString(mapItem.getTitle(), null);
                         if (chatHistoryForCallsign != null) {
                             android.util.Log.d(TAG, "onReceive: " + chatHistoryForCallsign);
@@ -240,7 +241,7 @@ public class SendChatDropDownReceiver extends DropDownReceiver implements ModemC
         }
 
         // persist in storage
-        SharedPreferences sharedPref = PluginLifecycle.activity.getSharedPreferences("hammer-prefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = Application.getPreferences(PluginLifecycle.activity);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(callsign, message);
 

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
+import com.sync.tak.Application;
 import com.sync.tak.plugin.PluginLifecycle;
 import com.sync.tak.R;
 import com.atakmap.android.dropdown.DropDownReceiver;
@@ -87,7 +88,7 @@ public class SettingsReceiver extends DropDownReceiver {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     ModemCotUtility.useAbbreviatedCoT = b;
 
-                    SharedPreferences sharedPref = PluginLifecycle.activity.getSharedPreferences("hammer-prefs", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = Application.getPreferences(PluginLifecycle.activity);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putBoolean("useAbbreviated", b);
                     editor.apply();
@@ -109,7 +110,7 @@ public class SettingsReceiver extends DropDownReceiver {
                         modemCotUtility.stopListener();
                     }
 
-                    SharedPreferences sharedPref = PluginLifecycle.activity.getSharedPreferences("hammer-prefs", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = Application.getPreferences(PluginLifecycle.activity);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putBoolean("cotUtilEnabled", b);
                     editor.apply();

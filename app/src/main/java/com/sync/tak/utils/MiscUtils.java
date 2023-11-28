@@ -54,7 +54,7 @@ public class MiscUtils {
     private static final String TAG = MiscUtils.class.getName();
     static TreeMap<Date, String> timeImageMap = null;
     //TODO move this out into OsppreState class
-    private static InputStream timeKmzInputStream = null;
+    private static final InputStream timeKmzInputStream = null;
 
     public static long dateTimeStringToUnixTime(String date, String time) {
         String [] timeFields = time.split(":");
@@ -146,7 +146,7 @@ public class MiscUtils {
 
     /**
      * Adapted from:
-     * https://stackoverflow.com/questions/4275797/view-setpadding-accepts-only-in-px-is-there-anyway-to-setpadding-in-dp
+     * <a href="https://stackoverflow.com/questions/4275797/view-setpadding-accepts-only-in-px-is-there-anyway-to-setpadding-in-dp">...</a>
      */
     public static int dpTopx(Context context, int dp) {
         float scale = context.getResources().getDisplayMetrics().density;

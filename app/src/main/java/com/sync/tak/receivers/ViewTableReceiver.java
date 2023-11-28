@@ -17,7 +17,6 @@ public abstract class ViewTableReceiver extends DropDownReceiver implements Drop
     public static final String LIGHTER_GRAY = "#f8f8f8";
     public static final String MED_GRAY = "#888888";
     public static final String MED_DARK_GRAY = "#6f6f6f";
-    public static final String DARK_GREEN = "#92a844";
     protected Context pluginContext;
     protected MapView mapView;
     protected int pxLeft;

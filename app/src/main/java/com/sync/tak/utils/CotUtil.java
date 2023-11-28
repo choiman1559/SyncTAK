@@ -14,7 +14,6 @@ import com.atakmap.coremap.cot.event.CotEvent;
 
 public class CotUtil {
     private static final String TAG = CotUtil.class.getSimpleName();
-    private static AbstractCotEventMarshal acem;
 
     public static void sendCotMessage(CotEvent cotEvent){
         CotMapComponent.getExternalDispatcher().dispatch(cotEvent);
@@ -64,12 +63,12 @@ public class CotUtil {
 
     private static void initialize(final CotEventListener cotEventListener, final String cotEventType){
         MarshalManager.registerMarshal(
-                acem = new AbstractCotEventMarshal("CasPopup") {
+                new AbstractCotEventMarshal("CasPopup") {
                     @Override
                     protected boolean accept(final CotEvent event) {
                         if(cotEventType != null){
                             if (event.getType().equals(cotEventType)){
-                                Log.d(TAG, "Accept: " + event.toString());
+                                Log.d(TAG, "Accept: " + event);
                                 cotEventListener.onReceiveCotEvent(event);
                             }
                         }else {

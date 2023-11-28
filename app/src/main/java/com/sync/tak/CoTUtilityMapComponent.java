@@ -33,23 +33,18 @@ import com.atakmap.coremap.log.Log;
 public class CoTUtilityMapComponent extends DropDownMapComponent implements CotUtil.CotEventListener,  CotServiceRemote.CotEventListener, MapEventDispatcher.MapEventDispatchListener {
 
     public static final String TAG = "PluginMain";
-
     public Context pluginContext;
-
-    private CoTUtilityDropDownReceiver ddr;
-    private MapView mapView;
 
     public void onCreate(final Context context, Intent intent,
             final MapView view) {
 
-        this.mapView = view;
         view.getMapEventDispatcher().addMapEventListener(MapEvent.ITEM_ADDED,this);
 
         context.setTheme(R.style.ATAKPluginTheme);
         super.onCreate(context, intent, view);
         pluginContext = context;
 
-        ddr = new CoTUtilityDropDownReceiver(
+        CoTUtilityDropDownReceiver ddr = new CoTUtilityDropDownReceiver(
                 view, context);
 
         Log.d(TAG, "registering the plugin filter");

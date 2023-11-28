@@ -32,9 +32,8 @@ public class MapItems {
 
         if(mapGroup.getItems().size() > 0){
             Collection<MapItem> items = mapGroup.getItems();
-            Iterator<MapItem> itemsIt = items.iterator();
-            while(itemsIt.hasNext()){
-                Log.d(TAG, "printMapGroups: " + test + " " + itemsIt.next().toString());
+            for (MapItem item : items) {
+                Log.d(TAG, "printMapGroups: " + test + " " + item.toString());
             }
         }
 
@@ -65,11 +64,7 @@ public class MapItems {
         MapGroup cotMapGroup = mapView.getRootGroup().findMapGroup("Cursor on Target");
         LinkedHashSet<MapItem> cotMapItems = new LinkedHashSet<>(MapItems.getMapItemsInGroup(cotMapGroup, new ArrayList<MapItem>()));
 
-        /**
-         Get all CoT markers stored in memory (from User Objects).. I don't know why this happens, but
-         these objects don't get saved to "Cursor on Target" group until after closing ATAK. Sigh...
-         */
-        if(mapView != null && mapView.getRootGroup() != null) {
+        if(mapView.getRootGroup() != null) {
             MapGroup userObjects = mapView.getRootGroup().findMapGroup("User Objects");
             Collection<MapItem> subItems;
             subItems = MapItems.getMapItemsInGroup(userObjects.findMapGroup("Hostile"), new ArrayList<MapItem>());

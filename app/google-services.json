@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "11094612875",
+    "project_id": "synctak-6bdbd",
+    "storage_bucket": "synctak-6bdbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11094612875:android:c4c442c32aa4d34126ad8e",
+        "android_client_info": {
+          "package_name": "com.sync.tak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC-6YqdtBWgpOka6GyLOEi3k24DZtvJh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

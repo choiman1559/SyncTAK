@@ -1,5 +1,6 @@
 package com.sync.tak.receivers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,27 +21,21 @@ public class ReadMeReceiver extends DropDownReceiver implements DropDown.OnState
             .getSimpleName();
 
     public static final String SHOW_README = "com.sync.tak.receivers.SHOW_README";
-    private LayoutInflater inflater;
-    private View mainView;
-
+    private final View mainView;
 
     private Intent intent;
 
+    @SuppressLint("InflateParams")
     public ReadMeReceiver(MapView mapView, Context context) {
         super(mapView);
 
-        inflater = (LayoutInflater) context
+        LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mainView = inflater.inflate(R.layout.read_me, null);
 
         ImageButton backButton = mainView.findViewById(R.id.backButtonReadMeView);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ReadMeReceiver.this.onBackButtonPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> ReadMeReceiver.this.onBackButtonPressed());
     }
 
     @Override
