@@ -21,9 +21,9 @@ import com.atakmap.coremap.log.Log;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import com.sync.tak.utils.DropDownManager;
-import com.sync.tak.utils.MapItems;
-import com.sync.tak.utils.ModemCotUtility;
+import com.sync.tak.utils.ui.DropDownManager;
+import com.sync.tak.utils.plugin.MapItems;
+import com.sync.tak.utils.plugin.ModemCotUtility;
 
 public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
         DropDown.OnStateListener {
@@ -47,7 +47,7 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
         this.pluginContext = context;
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        cotView = inflater.inflate(R.layout.map_cot_items, null);
+        cotView = inflater.inflate(R.layout.fragment_cot_items, null);
         this.mapView = mapView;
         table = cotView.findViewById(R.id.table);
         cotMapItems = new LinkedHashSet<>();

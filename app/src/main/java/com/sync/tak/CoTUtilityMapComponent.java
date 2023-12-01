@@ -6,14 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.sync.tak.plugin.PluginLifecycle;
-
-import com.sync.tak.utils.CotUtil;
-import com.sync.tak.utils.ModemCotUtility;
-
-import com.sync.tak.receivers.ReadMeReceiver;
+import com.sync.tak.utils.plugin.CotUtil;
+import com.sync.tak.utils.plugin.ModemCotUtility;
 import com.sync.tak.receivers.SendChatDropDownReceiver;
-import com.sync.tak.receivers.SettingsReceiver;
 import com.sync.tak.receivers.ViewCoTMarkersReceiver;
+import com.sync.tak.receivers.CoTUtilityDropDownReceiver;
+
 import com.atakmap.android.dropdown.DropDownReceiver;
 import com.atakmap.android.ipc.AtakBroadcast;
 import com.atakmap.android.ipc.AtakBroadcast.DocumentedIntentFilter;
@@ -24,7 +22,6 @@ import com.atakmap.android.maps.MapEventDispatcher;
 import com.atakmap.android.maps.MapView;
 import com.atakmap.android.dropdown.DropDownMapComponent;
 
-import com.sync.tak.receivers.CoTUtilityDropDownReceiver;
 import com.atakmap.comms.CommsMapComponent;
 import com.atakmap.comms.CotServiceRemote;
 import com.atakmap.coremap.cot.event.CotEvent;
@@ -34,6 +31,20 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
 
     public static final String TAG = "PluginMain";
     public Context pluginContext;
+    ModemCotUtility modemCotUtility;
+    SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        if(key != null && key.equals("serviceToggle")) {
+            if(sharedPreferences.getBoolean("serviceToggle", false)) {
+                if(!modemCotUtility.isReceiving()) {
+                    modemCotUtility.startListener();
+                }
+            } else {
+                if(modemCotUtility.isReceiving()) {
+                    modemCotUtility.stopListener();
+                }
+            }
+        }
+    };
 
     public void onCreate(final Context context, Intent intent,
             final MapView view) {
@@ -55,9 +66,7 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
         CotUtil.setCotEventListener(this);
 
         CommsMapComponent.getInstance().addOnCotEventListener(this);
-
-
-        ModemCotUtility modemCotUtility = ModemCotUtility.getInstance(view, context);
+        modemCotUtility = ModemCotUtility.getInstance(view, context);
 
         DocumentedIntentFilter filter = new DocumentedIntentFilter();
         filter.addAction("com.sync.tak.receivers.cotMenu",
@@ -70,30 +79,22 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
                 filter);
 
         SharedPreferences sharedPref = PluginLifecycle.activity.getSharedPreferences("hammer-prefs", Context.MODE_PRIVATE);
-        boolean enabled = sharedPref.getBoolean("cotUtilEnabled", true);
+        boolean enabled = sharedPref.getBoolean("serviceToggle", false);
         boolean useAbbreviated = sharedPref.getBoolean("useAbbreviated", true);
 
         if(enabled) {
             modemCotUtility.startListener();
         }
 
+        sharedPref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         ModemCotUtility.useAbbreviatedCoT = useAbbreviated;
-
-
-        ReadMeReceiver readMeReceiver = new ReadMeReceiver(view, context);
-        registerReceiverUsingPluginContext(pluginContext, "readme receiver", readMeReceiver, ReadMeReceiver.SHOW_README);
 
         SendChatDropDownReceiver sendChatDropDownReceiver = new SendChatDropDownReceiver(view, context);
         registerReceiverUsingPluginContext(pluginContext, "sendchat receiver", sendChatDropDownReceiver, SendChatDropDownReceiver.SEND_CHAT_RECEIVER);
 
         ViewCoTMarkersReceiver viewCoTMarkersReceiver = new ViewCoTMarkersReceiver(view, context);
         registerReceiverUsingPluginContext(pluginContext, "view markers receiver", viewCoTMarkersReceiver, ViewCoTMarkersReceiver.VIEW_COT_MARKERS_RECEIVER);
-
-        SettingsReceiver settingsReceiver = new SettingsReceiver(view, context);
-        registerReceiverUsingPluginContext(pluginContext, "settings receiver", settingsReceiver, SettingsReceiver.SETTINGS_RECEIVER);
-
     }
-
 
     private void registerReceiverUsingPluginContext(Context pluginContext, String name, DropDownReceiver rec, String actionName) {
         android.util.Log.d(TAG, "Registering " + name + " receiver with intent filter");

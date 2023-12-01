@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 
 ext.PLUGIN_VERSION_NAME = "1.0.1"
 ext.PLUGIN_VERSION_CODE = "010001"
@@ -102,10 +104,6 @@ android {
     namespace 'com.sync.tak'
     flavorDimensions
 
-    dexOptions {
-        jumboMode = true
-    }
-
     lintOptions {
         checkReleaseBuilds true
         abortOnError true
@@ -173,6 +171,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:32.6.0')
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'

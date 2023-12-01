@@ -32,9 +32,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.sync.tak.utils.DropDownManager;
-import com.sync.tak.utils.MapItems;
-import com.sync.tak.utils.ModemCotUtility;
+import com.sync.tak.utils.ui.DropDownManager;
+import com.sync.tak.utils.plugin.MapItems;
+import com.sync.tak.utils.plugin.ModemCotUtility;
 
 public class SendChatDropDownReceiver extends DropDownReceiver implements ModemCotUtility.ChatMessageListener {
     public static final String TAG = ViewCoTMarkersReceiver.class
@@ -62,7 +62,7 @@ public class SendChatDropDownReceiver extends DropDownReceiver implements ModemC
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        chatView = inflater.inflate(R.layout.send_cot_view, null);
+        chatView = inflater.inflate(R.layout.fragment_send_cot, null);
 
         this.mapView = mapView;
         this.context = context;
@@ -202,13 +202,13 @@ public class SendChatDropDownReceiver extends DropDownReceiver implements ModemC
 
 
     @Override
-    public void chatReceived(String message, String callsign, String timeMillis, String callsignDestination) {
+    public void chatReceived(String message, String callSign, String timeMillis, String callSignDestination) {
         CoordinatedTime coordinatedTime = new CoordinatedTime(Long.parseLong(timeMillis));
-        Toast toast = Toast.makeText(context, formatChatMessage(message, callsign, coordinatedTime, false), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, formatChatMessage(message, callSign, coordinatedTime, false), Toast.LENGTH_SHORT);
         toast.show();
 
-        String chatMessage = formatChatMessage(message, callsign, coordinatedTime, true);
-        String history = addToHistory(callsign, chatMessage);
+        String chatMessage = formatChatMessage(message, callSign, coordinatedTime, true);
+        String history = addToHistory(callSign, chatMessage);
 
         if(!hasBeenLoaded){
             return;
@@ -216,10 +216,10 @@ public class SendChatDropDownReceiver extends DropDownReceiver implements ModemC
 
         myCallsign = MapView.getMapView().getDeviceCallsign();
         if(selectedCallsign.equals("ALL")){
-            if(callsignDestination.equals("ALL") || callsignDestination.equals(myCallsign)){
+            if(callSignDestination.equals("ALL") || callSignDestination.equals(myCallsign)){
                 textView.setText(history);
             }
-        }else if(callsign.equals(selectedCallsign)){
+        }else if(callSign.equals(selectedCallsign)){
             textView.setText(history);
         }
     }

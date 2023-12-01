@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,7 +40,7 @@ public class CoTUtilityDropDownReceiver extends DropDownReceiver implements OnSt
         super(mapView);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mainView = inflater.inflate(R.layout.main_layout, null);
+        this.mainView = inflater.inflate(R.layout.fragment_inapp_main, null);
     }
 
     /**************************** PUBLIC METHODS *****************************/
@@ -79,24 +78,8 @@ public class CoTUtilityDropDownReceiver extends DropDownReceiver implements OnSt
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.RECORD_AUDIO}, 1234);
             }
-
-            // display connection information
-            ImageButton infoButton = mainView.findViewById(R.id.infoButton);
-            infoButton.setOnClickListener(view -> {
-                Intent intent13 = new Intent();
-                intent13.setAction(ReadMeReceiver.SHOW_README);
-                AtakBroadcast.getInstance().sendBroadcast(intent13);
-            });
-
-            Button settingsButton = mainView.findViewById(R.id.settingsButton);
-            settingsButton.setOnClickListener(view -> {
-                Intent intent14 = new Intent();
-                intent14.setAction(SettingsReceiver.SETTINGS_RECEIVER);
-                AtakBroadcast.getInstance().sendBroadcast(intent14);
-            });
         }
     }
-
 
     @Override
     public void onDropDownSelectionRemoved() {
