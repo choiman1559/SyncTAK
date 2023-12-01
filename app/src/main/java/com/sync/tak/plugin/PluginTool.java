@@ -38,7 +38,7 @@ public class PluginTool extends Tool implements ToolDescriptor {
 
     @Override
     public Drawable getIcon() {
-        return (context == null) ? null : AppCompatResources.getDrawable(context, R.drawable.hammer);
+        return (context == null) ? null : AppCompatResources.getDrawable(context, R.drawable.ic_atak_menu_foreground);
     }
 
     @Override

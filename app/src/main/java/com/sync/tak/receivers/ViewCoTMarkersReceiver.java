@@ -77,7 +77,6 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
             Button selfLocationButton = cotView.findViewById(R.id.selfLocationBtn);
             selfLocationButton.setOnClickListener(view -> {
                 android.util.Log.d(TAG, "sending self position");
-                ModemCotUtility.getInstance(mapView, pluginContext).stopListener();
                 ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapView.getSelfMarker());
                 Toast toast = Toast.makeText(context, "sending self marker", Toast.LENGTH_SHORT);
                 toast.show();
@@ -117,11 +116,7 @@ public class ViewCoTMarkersReceiver extends ViewTableReceiver implements
 
             table.addView(mapItemName, nameParams);
             table.addView(mapItemInfo, typeParams);
-
-            mapItemName.setOnClickListener(view -> {
-                ModemCotUtility.getInstance(mapView, pluginContext).stopListener();
-                ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapItem);
-            });
+            mapItemName.setOnClickListener(view -> ModemCotUtility.getInstance(mapView, pluginContext).sendCoT(mapItem));
 
             i++;
         }

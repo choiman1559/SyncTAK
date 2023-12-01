@@ -48,6 +48,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <receiver android:name=".receivers.CoTTransmittingReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.sync.tak.receivers.REQUEST_DATA_SEND" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <queries>

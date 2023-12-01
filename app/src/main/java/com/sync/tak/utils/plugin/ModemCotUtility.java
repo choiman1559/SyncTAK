@@ -3,8 +3,11 @@ package com.sync.tak.utils.plugin;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
+import com.sync.tak.receivers.CoTTransmittingReceiver;
 import com.sync.tak.CoTPositionTool;
+
 import com.atakmap.android.dropdown.DropDown;
 import com.atakmap.android.dropdown.DropDownReceiver;
 import com.atakmap.android.importexport.CotEventFactory;
@@ -26,9 +29,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.sync.tak.comms.FirebaseMessageService;
-import com.sync.tak.comms.NetworkWorkers;
-
 public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStateListener, MapEventDispatcher.MapEventDispatchListener {
     public static final String TAG = ModemCotUtility.class
             .getSimpleName();
@@ -37,10 +37,9 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
     @SuppressLint("StaticFieldLeak")
     private static ModemCotUtility instance = null;
     private final Context context;
-    private boolean isReceiving = false;
 
     public static boolean useAbbreviatedCoT = true;
-
+    private final CoTTransmittingReceiver coTTransmittingReceiver;
     private final Set<ChatMessageListener> chatMessageListenerSet = new HashSet<>();
 
     public interface ChatMessageListener {
@@ -77,6 +76,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         }
 
         getMapView().getMapEventDispatcher().addMapEventListener(MapEvent.ITEM_ADDED, this);
+        coTTransmittingReceiver = new CoTTransmittingReceiver();
     }
 
     @Override
@@ -111,7 +111,6 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
                 .equals("com.sync.tak.receivers.cotMenu")) {
             PointMapItem temp = findTarget(intent.getStringExtra("targetUID"));
             if (temp != null) {
-                stopListener();
                 sendCoT(temp);
             }
         }
@@ -131,29 +130,29 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
     /**
      * Start the CoT stream listener
      */
-    @SuppressLint("StaticFieldLeak")
+    @SuppressLint({"StaticFieldLeak", "UnspecifiedRegisterReceiverFlag"})
     public void startListener() {
-        isReceiving = true;
         receiveCot = new AtomicBoolean(false);
         android.util.Log.d(TAG, "startCotListener");
 
-        FirebaseMessageService.mOnMessageReceiveListener = message -> {
+        context.registerReceiver(coTTransmittingReceiver, new IntentFilter(CoTTransmittingReceiver.ACTION_RECEIVE));
+        CoTTransmittingReceiver.mOnMessageReceiveListener = message -> {
             receiveCot.set(true);
             android.util.Log.d(TAG, "onPostExecute: " + message);
             if (!message.isBlank()) {
                 parseCoT(message);
             }
         };
+
+        CoTTransmittingReceiver.onMetaDataReceiveListener = isAbbreviated -> useAbbreviatedCoT = isAbbreviated;
+        CoTTransmittingReceiver.sendBroadcastMetaDataRequest(context);
     }
 
     public void stopListener() {
         android.util.Log.d(TAG, "stopListener: ");
-        isReceiving = false;
-        FirebaseMessageService.mOnMessageReceiveListener = null;
-    }
-
-    public boolean isReceiving() {
-        return isReceiving;
+        CoTTransmittingReceiver.mOnMessageReceiveListener = null;
+        CoTTransmittingReceiver.onMetaDataReceiveListener = null;
+        context.unregisterReceiver(coTTransmittingReceiver);
     }
 
     private void parseCoT(String message) {
@@ -249,7 +248,6 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
 
     private String getMenu() {
         return PluginMenuParser.getMenu(context, "menu.xml");
-
     }
 
     @Override
@@ -266,7 +264,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         }
 
         android.util.Log.d(TAG, "sending " + (useAbbreviatedCoT ? "abbreviated" : "non-abbreviated") + " COT: " + cotEvent.toString());
-        NetworkWorkers.pushMessage(context, cotEvent.toString());
+        CoTTransmittingReceiver.sendBroadcastSend(context, cotEvent.toString());
     }
 
     public void sendChat(String message, String callSignToSendTo) {
@@ -277,11 +275,10 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         //TODO: check if the message is parsed without padding
         // Specify padding to prepend CoT messages with
         String padding = "000000000000000000000000000000000000000000000000000000000000000";
-        NetworkWorkers.pushMessage(context, padding + encodedMessage);
+        CoTTransmittingReceiver.sendBroadcastSend(context, padding + encodedMessage);
     }
 
     public void registerChatListener(ChatMessageListener chatMessageListener) {
         chatMessageListenerSet.add(chatMessageListener);
     }
-
 }

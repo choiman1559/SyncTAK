@@ -115,7 +115,6 @@ public class SendChatDropDownReceiver extends DropDownReceiver implements ModemC
                 public void onClick(View view) {
 
                     if(selectedCallsign != null) {
-                        ModemCotUtility.getInstance(mapView, context).stopListener();
                         ModemCotUtility.getInstance(mapView, context).sendChat(editText.getText().toString(), selectedCallsign);
                         CoordinatedTime coordinatedTime = new CoordinatedTime(System.currentTimeMillis());
 

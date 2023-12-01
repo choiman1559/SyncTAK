@@ -18,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sync.tak.Application;
 import com.sync.tak.BuildConfig;
+import com.sync.tak.receivers.CoTTransmittingReceiver;
 import com.sync.tak.receivers.nsplugin.NetworkProvider;
 import com.sync.tak.ui.profile.NetProfile;
 import com.sync.tak.utils.PowerUtils;
@@ -40,11 +41,6 @@ public class FirebaseMessageService extends FirebaseMessagingService {
     public static final ArrayList<Integer> selfReceiveDetectorList = new ArrayList<>();
     public static final ArrayList<SplitDataObject> splitDataList = new ArrayList<>();
     private final NetworkProvider.onProviderMessageListener onProviderMessageListener = this::onMessageReceived;
-    public static onMessageReceiveListener mOnMessageReceiveListener;
-
-    public interface onMessageReceiveListener {
-        void onReceive(String message);
-    }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -164,8 +160,8 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         switch (Objects.requireNonNull(map.get("type"))) {
             case "cot_message" -> {
                 String cotMessage = map.get("cot_data");
-                if(!isDeviceItself(context, map) && mOnMessageReceiveListener != null) {
-                    mOnMessageReceiveListener.onReceive(cotMessage);
+                if(!isDeviceItself(context, map)) {
+                    CoTTransmittingReceiver.sendBroadcastReceive(context, cotMessage);
                 }
             }
 

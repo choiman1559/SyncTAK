@@ -2,10 +2,8 @@ package com.sync.tak;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.sync.tak.plugin.PluginLifecycle;
 import com.sync.tak.utils.plugin.CotUtil;
 import com.sync.tak.utils.plugin.ModemCotUtility;
 import com.sync.tak.receivers.SendChatDropDownReceiver;
@@ -32,33 +30,16 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
     public static final String TAG = "PluginMain";
     public Context pluginContext;
     ModemCotUtility modemCotUtility;
-    SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-        if(key != null && key.equals("serviceToggle")) {
-            if(sharedPreferences.getBoolean("serviceToggle", false)) {
-                if(!modemCotUtility.isReceiving()) {
-                    modemCotUtility.startListener();
-                }
-            } else {
-                if(modemCotUtility.isReceiving()) {
-                    modemCotUtility.stopListener();
-                }
-            }
-        }
-    };
 
-    public void onCreate(final Context context, Intent intent,
-            final MapView view) {
-
+    public void onCreate(final Context context, Intent intent, final MapView view) {
         view.getMapEventDispatcher().addMapEventListener(MapEvent.ITEM_ADDED,this);
-
         context.setTheme(R.style.ATAKPluginTheme);
         super.onCreate(context, intent, view);
         pluginContext = context;
 
-        CoTUtilityDropDownReceiver ddr = new CoTUtilityDropDownReceiver(
-                view, context);
-
+        CoTUtilityDropDownReceiver ddr = new CoTUtilityDropDownReceiver(view, context);
         Log.d(TAG, "registering the plugin filter");
+
         DocumentedIntentFilter ddFilter = new DocumentedIntentFilter();
         ddFilter.addAction(CoTUtilityDropDownReceiver.SHOW_PLUGIN);
         registerDropDownReceiver(ddr, ddFilter);
@@ -69,25 +50,10 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
         modemCotUtility = ModemCotUtility.getInstance(view, context);
 
         DocumentedIntentFilter filter = new DocumentedIntentFilter();
-        filter.addAction("com.sync.tak.receivers.cotMenu",
-                "this intent launches the cot send utility",
-                new DocumentedExtra[] {
-                        new DocumentedExtra("targetUID",
-                                "the map item identifier used to populate the drop down")
-                });
-        registerDropDownReceiver(modemCotUtility,
-                filter);
-
-        SharedPreferences sharedPref = PluginLifecycle.activity.getSharedPreferences("hammer-prefs", Context.MODE_PRIVATE);
-        boolean enabled = sharedPref.getBoolean("serviceToggle", false);
-        boolean useAbbreviated = sharedPref.getBoolean("useAbbreviated", true);
-
-        if(enabled) {
-            modemCotUtility.startListener();
-        }
-
-        sharedPref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        ModemCotUtility.useAbbreviatedCoT = useAbbreviated;
+        filter.addAction("com.sync.tak.receivers.cotMenu", "this intent launches the cot send utility",
+                new DocumentedExtra[] { new DocumentedExtra("targetUID", "the map item identifier used to populate the drop down")});
+        registerDropDownReceiver(modemCotUtility, filter);
+        modemCotUtility.startListener();
 
         SendChatDropDownReceiver sendChatDropDownReceiver = new SendChatDropDownReceiver(view, context);
         registerReceiverUsingPluginContext(pluginContext, "sendchat receiver", sendChatDropDownReceiver, SendChatDropDownReceiver.SEND_CHAT_RECEIVER);
@@ -113,8 +79,8 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
     @Override
     protected void onDestroyImpl(Context context, MapView view) {
         super.onDestroyImpl(context, view);
+        modemCotUtility.stopListener();
     }
-
 
     @Override
     public void onReceiveCotEvent(CotEvent cotEvent) {

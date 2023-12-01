@@ -155,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     void selectProfile(ProfileHolder profileHolder) {
-        if(lastSelectedProfile.equals(profileHolder)) {
+        if(lastSelectedProfile != null && lastSelectedProfile.equals(profileHolder)) {
             return;
         }
 

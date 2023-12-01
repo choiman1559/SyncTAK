@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kieronquinn.monetcompat.core.MonetCompat;
 import com.sync.tak.Application;
 import com.sync.tak.R;
+import com.sync.tak.receivers.CoTTransmittingReceiver;
 import com.sync.tak.ui.NetSelectActivity;
 import com.sync.tak.utils.ui.ToastHelper;
 
@@ -32,6 +33,7 @@ public class GeneralPreference extends PreferenceFragmentCompat  {
     MonetCompat monet;
     SharedPreferences prefs;
 
+    Preference useAbbreviated;
     Preference UseSplitData;
     Preference SplitInterval;
     Preference SplitAfterEncryption;
@@ -63,9 +65,15 @@ public class GeneralPreference extends PreferenceFragmentCompat  {
         setPreferencesFromResource(R.xml.general_preferences, rootKey);
         prefs = Application.getPreferences(mContext);
 
+        useAbbreviated = findPreference("useAbbreviated");
         UseSplitData = findPreference("UseSplitData");
         SplitInterval = findPreference("SplitInterval");
         SplitAfterEncryption = findPreference("SplitAfterEncryption");
+
+        useAbbreviated.setOnPreferenceChangeListener((preference, newValue) -> {
+            CoTTransmittingReceiver.sendBroadcastMetaDataResponse(mContext);
+            return true;
+        });
 
         int splitIntervalValue = prefs.getInt("SplitInterval", 500);
         boolean useSplit = prefs.getBoolean("UseSplitData", false);

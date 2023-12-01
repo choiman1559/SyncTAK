@@ -17,7 +17,7 @@
             android:title="Select method to get device identifiers" />
 
         <com.sync.tak.utils.ui.SwitchedPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:icon="@drawable/ic_fluent_resize_small_24_regular"
             android:key="useAbbreviated"
             android:title="Abbreviate CoT" />
