@@ -72,7 +72,7 @@ public class AddProfileActivity extends AppCompatActivity {
         saveButton.setOnClickListener((v) -> {
             boolean isSafeToSave = true;
 
-            String profileNameString = Objects.requireNonNull(profileName.getText()).toString();
+            String profileNameString = Objects.requireNonNull(profileName.getText()).toString().trim();
             if(profileNameString.isBlank()) {
                 isSafeToSave = false;
                 profileName.setError("profile name is blank");
@@ -80,7 +80,7 @@ public class AddProfileActivity extends AppCompatActivity {
                 profile.profileName = profileNameString;
             }
 
-            String profileGroupIDString = Objects.requireNonNull(profileGroupID.getText()).toString();
+            String profileGroupIDString = Objects.requireNonNull(profileGroupID.getText()).toString().trim();
             if(profileGroupIDString.isBlank()) {
                 isSafeToSave = false;
                 profileGroupID.setError("profile group ID is blank");
@@ -88,12 +88,12 @@ public class AddProfileActivity extends AppCompatActivity {
                 profile.fcmTopic = profileGroupIDString;
             }
 
-            String profileEncryptionKeyString = Objects.requireNonNull(profileEncryptionKey.getText()).toString();
+            String profileEncryptionKeyString = Objects.requireNonNull(profileEncryptionKey.getText()).toString().trim();
             if(!profileEncryptionKeyString.isBlank()) {
                 profile.encryptKey = profileEncryptionKeyString;
             }
 
-            String profileHMACKeyString = Objects.requireNonNull(profileHMACKey.getText()).toString();
+            String profileHMACKeyString = Objects.requireNonNull(profileHMACKey.getText()).toString().trim();
             if(!profileEncryptionKeyString.isBlank()) {
                 profile.hmacKey = profileHMACKeyString;
             }

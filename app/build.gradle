@@ -41,7 +41,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'com.android.tools.build:gradle:8.2.0'
         if(isDevKitEnabled()) {
             classpath "com.atakmap.gradle:atak-gradle-takdev:${takdevVersion}"
         }
@@ -116,7 +116,8 @@ android {
         }
 
         release {
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             proguardFile 'proguard-gradle.txt'
             matchingFallbacks = ['odk']
         }

@@ -1,9 +1,11 @@
 package com.sync.tak;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.sync.tak.receivers.CoTTransmittingReceiver;
 import com.sync.tak.utils.plugin.CotUtil;
 import com.sync.tak.utils.plugin.ModemCotUtility;
 import com.sync.tak.receivers.SendChatDropDownReceiver;
@@ -60,6 +62,9 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
 
         ViewCoTMarkersReceiver viewCoTMarkersReceiver = new ViewCoTMarkersReceiver(view, context);
         registerReceiverUsingPluginContext(pluginContext, "view markers receiver", viewCoTMarkersReceiver, ViewCoTMarkersReceiver.VIEW_COT_MARKERS_RECEIVER);
+
+        CoTTransmittingReceiver coTTransmittingReceiver = new CoTTransmittingReceiver();
+        registerReceiverUsingAtakContext("transmitting receiver", coTTransmittingReceiver, CoTTransmittingReceiver.ACTION_RECEIVE);
     }
 
     private void registerReceiverUsingPluginContext(Context pluginContext, String name, DropDownReceiver rec, String actionName) {
@@ -69,11 +74,11 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
         this.registerReceiver(pluginContext, rec, mainIntentFilter);
     }
 
-    private void registerReceiverUsingAtakContext(String name, DropDownReceiver rec, String actionName) {
+    private void registerReceiverUsingAtakContext(String name, BroadcastReceiver rec, String actionName) {
         android.util.Log.d(TAG, "Registering " + name + " receiver with intent filter");
         AtakBroadcast.DocumentedIntentFilter mainIntentFilter = new AtakBroadcast.DocumentedIntentFilter();
         mainIntentFilter.addAction(actionName);
-        AtakBroadcast.getInstance().registerReceiver(rec, mainIntentFilter);
+        AtakBroadcast.getInstance().registerSystemReceiver(rec, mainIntentFilter);
     }
 
     @Override

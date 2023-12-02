@@ -6,13 +6,13 @@
 # we need line numbers in our stack traces otherwise they are pretty useless
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
-
--applymapping <atak.proguard.mapping>
 -repackageclasses atakplugin.PluginTemplate
 
 -keepattributes *Annotation*
 -keepattributes Signature, InnerClasses
 
+-keep class *
+-keep class com.sync.tak.*
 
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
@@ -49,3 +49,75 @@
 -keep class * implements transapps.maps.plugin.lifecycle.Lifecycle {
 }
 
+# This is generated automatically by the Android Gradle plugin.
+#noinspection ShrinkerUnresolvedReferences
+-dontwarn android.support.util.Base64
+-dontwarn android.support.util.LruCache
+-dontwarn androidx.compose.foundation.DarkThemeKt
+-dontwarn androidx.compose.material3.ColorScheme
+-dontwarn androidx.compose.material3.ColorSchemeKt
+-dontwarn androidx.compose.material3.MaterialThemeKt
+-dontwarn androidx.compose.material3.Typography
+-dontwarn androidx.compose.runtime.Composable
+-dontwarn androidx.compose.ui.graphics.ColorKt
+-dontwarn androidx.exifinterface.media.ExifInterface
+-dontwarn androidx.window.extensions.WindowExtensions
+-dontwarn androidx.window.extensions.WindowExtensionsProvider
+-dontwarn androidx.window.extensions.embedding.ActivityEmbeddingComponent
+-dontwarn androidx.window.extensions.embedding.ActivityRule$Builder
+-dontwarn androidx.window.extensions.embedding.ActivityRule
+-dontwarn androidx.window.extensions.embedding.ActivityStack
+-dontwarn androidx.window.extensions.embedding.EmbeddingRule
+-dontwarn androidx.window.extensions.embedding.SplitInfo
+-dontwarn androidx.window.extensions.embedding.SplitPairRule$Builder
+-dontwarn androidx.window.extensions.embedding.SplitPairRule
+-dontwarn androidx.window.extensions.embedding.SplitPlaceholderRule$Builder
+-dontwarn androidx.window.extensions.embedding.SplitPlaceholderRule
+-dontwarn androidx.window.extensions.layout.DisplayFeature
+-dontwarn androidx.window.extensions.layout.FoldingFeature
+-dontwarn androidx.window.extensions.layout.WindowLayoutComponent
+-dontwarn androidx.window.extensions.layout.WindowLayoutInfo
+-dontwarn androidx.window.sidecar.SidecarDeviceState
+-dontwarn androidx.window.sidecar.SidecarDisplayFeature
+-dontwarn androidx.window.sidecar.SidecarInterface$SidecarCallback
+-dontwarn androidx.window.sidecar.SidecarInterface
+-dontwarn androidx.window.sidecar.SidecarProvider
+-dontwarn androidx.window.sidecar.SidecarWindowLayoutInfo
+-dontwarn com.afollestad.materialdialogs.MaterialDialog
+-dontwarn com.afollestad.materialdialogs.WhichButton
+-dontwarn com.afollestad.materialdialogs.actions.DialogActionExtKt
+-dontwarn com.afollestad.materialdialogs.callbacks.DialogCallbackExtKt
+-dontwarn com.afollestad.materialdialogs.internal.button.DialogActionButton
+-dontwarn com.afollestad.materialdialogs.internal.button.DialogActionButtonLayout
+-dontwarn com.afollestad.materialdialogs.internal.main.DialogLayout
+-dontwarn com.afollestad.materialdialogs.internal.main.DialogTitleLayout
+-dontwarn com.afollestad.materialdialogs.internal.message.DialogContentLayout
+-dontwarn com.squareup.okhttp.CipherSuite
+-dontwarn com.squareup.okhttp.ConnectionSpec
+-dontwarn com.squareup.okhttp.TlsVersion
+-dontwarn groovy.lang.Closure
+-dontwarn groovy.lang.GroovyObject
+-dontwarn groovy.lang.MetaClass
+-dontwarn groovy.lang.Reference
+-dontwarn groovy.transform.Generated
+-dontwarn groovy.transform.Internal
+-dontwarn org.codehaus.groovy.reflection.ClassInfo
+-dontwarn org.codehaus.groovy.runtime.BytecodeInterface8
+-dontwarn org.codehaus.groovy.runtime.GStringImpl
+-dontwarn org.codehaus.groovy.runtime.GeneratedClosure
+-dontwarn org.codehaus.groovy.runtime.ScriptBytecodeAdapter
+-dontwarn org.codehaus.groovy.runtime.callsite.CallSite
+-dontwarn org.codehaus.groovy.runtime.callsite.CallSiteArray
+-dontwarn org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation
+-dontwarn org.codehaus.groovy.runtime.typehandling.ShortTypeHandling
+-dontwarn org.codehaus.groovy.transform.ImmutableASTTransformation
+-dontwarn org.gradle.api.DefaultTask
+-dontwarn org.gradle.api.DomainObjectSet
+-dontwarn org.gradle.api.GradleException
+-dontwarn org.gradle.api.Plugin
+-dontwarn org.gradle.api.Project
+-dontwarn org.gradle.api.UnknownTaskException
+-dontwarn org.gradle.api.artifacts.Configuration
+-dontwarn org.gradle.api.artifacts.Dependency
+-dontwarn org.gradle.api.artifacts.ResolveException
+-dontwarn org.gradle.api.artifacts.repositories.MavenArtifactRepository

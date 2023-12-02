@@ -3,7 +3,7 @@ package com.sync.tak.utils.plugin;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.os.Build;
 
 import com.sync.tak.receivers.CoTTransmittingReceiver;
 import com.sync.tak.CoTPositionTool;
@@ -27,19 +27,16 @@ import com.atakmap.coremap.maps.coords.GeoPoint;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStateListener, MapEventDispatcher.MapEventDispatchListener {
-    public static final String TAG = ModemCotUtility.class
-            .getSimpleName();
-    private AtomicBoolean receiveCot;
+    public static final String TAG = ModemCotUtility.class.getSimpleName();
 
     @SuppressLint("StaticFieldLeak")
     private static ModemCotUtility instance = null;
     private final Context context;
 
     public static boolean useAbbreviatedCoT = true;
-    private final CoTTransmittingReceiver coTTransmittingReceiver;
+    public static CoTTransmittingReceiver coTTransmittingReceiver;
     private final Set<ChatMessageListener> chatMessageListenerSet = new HashSet<>();
 
     public interface ChatMessageListener {
@@ -132,12 +129,12 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
      */
     @SuppressLint({"StaticFieldLeak", "UnspecifiedRegisterReceiverFlag"})
     public void startListener() {
-        receiveCot = new AtomicBoolean(false);
-        android.util.Log.d(TAG, "startCotListener");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            android.util.Log.d(TAG, "startCotListener: " + getMapView().getContext().getPackageName());
+        }
 
-        context.registerReceiver(coTTransmittingReceiver, new IntentFilter(CoTTransmittingReceiver.ACTION_RECEIVE));
+        Log.d("version tick", "10");
         CoTTransmittingReceiver.mOnMessageReceiveListener = message -> {
-            receiveCot.set(true);
             android.util.Log.d(TAG, "onPostExecute: " + message);
             if (!message.isBlank()) {
                 parseCoT(message);
@@ -145,7 +142,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         };
 
         CoTTransmittingReceiver.onMetaDataReceiveListener = isAbbreviated -> useAbbreviatedCoT = isAbbreviated;
-        CoTTransmittingReceiver.sendBroadcastMetaDataRequest(context);
+        CoTTransmittingReceiver.sendBroadcastMetaDataRequest(getMapView().getContext());
     }
 
     public void stopListener() {
@@ -155,7 +152,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         context.unregisterReceiver(coTTransmittingReceiver);
     }
 
-    private void parseCoT(String message) {
+    public void parseCoT(String message) {
         boolean foundStart = false;
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < message.length(); i++) {
@@ -170,8 +167,10 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
             }
         }
 
+        Log.d("ddd", message);
+
         // is chat message
-        if (message.contains("chat@@@")) {
+        if (message.startsWith("chat@@@")) {
             String[] result = message.split("@@@");
             String chatMessage = result[1];
             String callSign = result[2];
@@ -190,7 +189,6 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
                 }
             }
         } else {
-
             CotEvent cotEvent = null;
             try {
                 cotEvent = CotEvent.parse(stringBuilder.toString());
@@ -272,10 +270,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         String encodedMessage = "chat@@@" + message + "@@@" + callSign + "@@@" + callSignToSendTo + "@@@" + System.currentTimeMillis();
 
         android.util.Log.d(TAG, "sending chat message: " + encodedMessage);
-        //TODO: check if the message is parsed without padding
-        // Specify padding to prepend CoT messages with
-        String padding = "000000000000000000000000000000000000000000000000000000000000000";
-        CoTTransmittingReceiver.sendBroadcastSend(context, padding + encodedMessage);
+        CoTTransmittingReceiver.sendBroadcastSend(context, encodedMessage);
     }
 
     public void registerChatListener(ChatMessageListener chatMessageListener) {

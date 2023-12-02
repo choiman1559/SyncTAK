@@ -21,6 +21,7 @@ public class CoTTransmittingReceiver extends BroadcastReceiver {
     public static final String RECEIVER_CLASS = "com.sync.tak.receivers.CoTTransmittingReceiver";
     public static final String ACTION_SEND = "com.sync.tak.receivers.REQUEST_DATA_SEND";
     public static final String ACTION_RECEIVE = "com.sync.tak.receivers.REQUEST_DATA_RECEIVE";
+
     public static onMessageReceiveListener mOnMessageReceiveListener;
     public static onMetaDataReceiveListener onMetaDataReceiveListener;
 
@@ -47,7 +48,7 @@ public class CoTTransmittingReceiver extends BroadcastReceiver {
                 }
             } else if(mOnMessageReceiveListener != null) {
                 mOnMessageReceiveListener.onReceive(intent.getStringExtra(MESSAGE_KEY));
-            }
+            } else Log.d("onMessageReceiveListener", "returning: listener is null");
         }
     }
 
@@ -61,7 +62,7 @@ public class CoTTransmittingReceiver extends BroadcastReceiver {
         context.sendBroadcast(intent);
 
         if (BuildConfig.DEBUG) {
-            Log.d("sent", message);
+            Log.d("sent to other device", message);
         }
     }
 
@@ -79,8 +80,6 @@ public class CoTTransmittingReceiver extends BroadcastReceiver {
         intent.setAction(ACTION_RECEIVE);
         intent.putExtra(IS_METADATA_KEY, true);
         intent.putExtra(ABBREVIATED_KEY, Application.getPreferences(context).getBoolean("useAbbreviated", false));
-        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        intent.setComponent(new ComponentName("com.atakmap.app.civ", RECEIVER_CLASS));
         context.sendBroadcast(intent);
     }
 
@@ -89,12 +88,10 @@ public class CoTTransmittingReceiver extends BroadcastReceiver {
         intent.setAction(ACTION_RECEIVE);
         intent.putExtra(IS_METADATA_KEY, false);
         intent.putExtra(MESSAGE_KEY, message);
-        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        intent.setComponent(new ComponentName("com.atakmap.app.civ", RECEIVER_CLASS));
         context.sendBroadcast(intent);
 
         if (BuildConfig.DEBUG) {
-            Log.d("sent", message);
+            Log.d("sent received to atak", message);
         }
     }
 }
