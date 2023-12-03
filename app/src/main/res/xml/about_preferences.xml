@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="appVersion"
+        android:summary="1.0.0"
+        android:title="App Version" />
 
+    <Preference
+        android:key="githubRepository"
+        android:summary="Made by Norix Team"
+        android:title="Git repository" />
+
+    <PreferenceCategory
+        android:title="Legal &amp; regulatory">
+
+        <Preference
+            android:key="openSource"
+            android:title="Open source license"/>
+
+        <Preference
+            android:key="hammerNotice"
+            android:title="US Government Legal Information"/>
+    </PreferenceCategory>
 </PreferenceScreen>

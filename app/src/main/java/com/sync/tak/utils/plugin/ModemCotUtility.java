@@ -73,7 +73,6 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         }
 
         getMapView().getMapEventDispatcher().addMapEventListener(MapEvent.ITEM_ADDED, this);
-        coTTransmittingReceiver = new CoTTransmittingReceiver();
     }
 
     @Override

@@ -64,18 +64,19 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
         registerReceiverUsingPluginContext(pluginContext, "view markers receiver", viewCoTMarkersReceiver, ViewCoTMarkersReceiver.VIEW_COT_MARKERS_RECEIVER);
 
         CoTTransmittingReceiver coTTransmittingReceiver = new CoTTransmittingReceiver();
+        ModemCotUtility.coTTransmittingReceiver = coTTransmittingReceiver;
         registerReceiverUsingAtakContext("transmitting receiver", coTTransmittingReceiver, CoTTransmittingReceiver.ACTION_RECEIVE);
     }
 
     private void registerReceiverUsingPluginContext(Context pluginContext, String name, DropDownReceiver rec, String actionName) {
-        android.util.Log.d(TAG, "Registering " + name + " receiver with intent filter");
+        android.util.Log.d(TAG, "Registering " + name + " with intent filter");
         AtakBroadcast.DocumentedIntentFilter mainIntentFilter = new AtakBroadcast.DocumentedIntentFilter();
         mainIntentFilter.addAction(actionName);
         this.registerReceiver(pluginContext, rec, mainIntentFilter);
     }
 
     private void registerReceiverUsingAtakContext(String name, BroadcastReceiver rec, String actionName) {
-        android.util.Log.d(TAG, "Registering " + name + " receiver with intent filter");
+        android.util.Log.d(TAG, "Registering " + name + " with intent filter");
         AtakBroadcast.DocumentedIntentFilter mainIntentFilter = new AtakBroadcast.DocumentedIntentFilter();
         mainIntentFilter.addAction(actionName);
         AtakBroadcast.getInstance().registerSystemReceiver(rec, mainIntentFilter);
