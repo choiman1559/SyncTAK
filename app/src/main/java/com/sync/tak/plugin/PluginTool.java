@@ -1,85 +1,32 @@
 package com.sync.tak.plugin;
 
+import com.atak.plugins.impl.AbstractPluginTool;
 import com.sync.tak.R;
 import com.sync.tak.receivers.CoTUtilityDropDownReceiver;
-import com.atakmap.android.ipc.AtakBroadcast;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.ViewGroup;
 
 import androidx.appcompat.content.res.AppCompatResources;
 
-import transapps.mapi.MapView;
-import transapps.maps.plugin.tool.Group;
-import transapps.maps.plugin.tool.Tool;
-import transapps.maps.plugin.tool.ToolDescriptor;
+import gov.tak.api.util.Disposable;
 
-public class PluginTool extends Tool implements ToolDescriptor {
-    private static final String TAG = PluginTool.class.getSimpleName();
-    private final Context context;
+public class PluginTool extends AbstractPluginTool implements Disposable {
 
     @SuppressLint("StaticFieldLeak")
-    public static Activity activity;
+    public Intent intent;
 
     public PluginTool(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public String getDescription() {
-        return context.getString(R.string.app_name);
-    }
-
-    @Override
-    public Drawable getIcon() {
-        return (context == null) ? null : AppCompatResources.getDrawable(context, R.drawable.ic_atak_menu_foreground);
-    }
-
-    @Override
-    public Group[] getGroups() {
-        return new Group[] {
-                Group.GENERAL
-        };
-    }
-
-    @Override
-    public String getShortDescription() {
-        return context.getString(R.string.app_name);
-    }
-
-    @Override
-    public Tool getTool() {
-        return this;
-    }
-
-    @Override
-    public void onActivate(Activity arg0, MapView arg1, ViewGroup arg2,
-            Bundle arg3,
-            ToolCallback arg4) {
-
-        Log.d(TAG, "Activated");
-        activity = arg0;
-
-        // Hack to close the dropdown that automatically opens when a tool
-        // plugin is activated.
-        if (arg4 != null) {
-            arg4.onToolDeactivated(this);
-        }
-        // Intent to launch the dropdown or tool
-
-        //arg2.setVisibility(ViewGroup.INVISIBLE);
-        Intent i = new Intent(
+        super(context,
+                context.getString(R.string.app_name),
+                context.getString(R.string.app_desc),
+                AppCompatResources.getDrawable(context, R.drawable.ic_atak_menu_foreground),
                 CoTUtilityDropDownReceiver.SHOW_PLUGIN);
-        AtakBroadcast.getInstance().sendBroadcast(i);
     }
 
     @Override
-    public void onDeactivate(ToolCallback arg0) {
+    public void dispose() {
+
     }
 }

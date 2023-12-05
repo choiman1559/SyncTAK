@@ -40,7 +40,7 @@ public class PluginNativeLoader {
     */
 
     @SuppressWarnings("unused")
-    @SuppressLint("UnsafeDynamicallyLoadedCode")
+    @SuppressLint({"UnsafeDynamicallyLoadedCode", "JavaFileIOIssue"})
     public static void loadLibrary(final String name) {
         if (ndl != null) {
             final String lib = ndl + File.separator

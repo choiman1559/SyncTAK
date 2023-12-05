@@ -72,7 +72,7 @@ public class AboutPreference extends PreferenceFragmentCompat  {
         super.onPreferenceTreeClick(preference);
 
         switch (preference.getKey()) {
-            case "githubRepository" -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/choiman1559/NotiSender")));
+            case "githubRepository" -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/choiman1559/SyncTAK")));
             case "openSource" -> {
                 MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(mContext, R.style.Theme_App_Palette_Dialog));
                 dialog.setTitle("Open Source Licenses");

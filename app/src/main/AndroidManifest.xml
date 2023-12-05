@@ -1,5 +1,6 @@
 <manifest xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sync.tak">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,7 +24,7 @@
         android:theme="@style/Theme.App.Palette"
         tools:ignore="DataExtractionRules">
 
-        <meta-data android:name="plugin-api" android:value="com.atakmap.app@4.6.0.CIV"/>
+        <meta-data android:name="plugin-api" android:value="com.atakmap.app@4.10.0.CIV"/>
         <meta-data android:name="app_desc" android:value="@string/app_desc"/>
 
         <activity
@@ -39,6 +40,14 @@
         <activity android:name=".ui.profile.ProfileActivity"/>
         <activity android:name=".ui.NetSelectActivity"/>
         <activity android:name=".ui.profile.AddProfileActivity"/>
+
+        <activity android:name="com.atakmap.app.component"
+            tools:ignore="MissingClass"
+            android:exported="true">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="com.atakmap.app.component" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".comms.FirebaseMessageService"

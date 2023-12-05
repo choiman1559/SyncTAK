@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- if you change this file, make sure to tick the versionCode in AndroidManifest. -->
 <plugin>
-
     <extension
-        type="transapps.maps.plugin.lifecycle.Lifecycle"
+        type="gov.tak.api.plugin.IPlugin"
         impl="com.sync.tak.plugin.PluginLifecycle"
         singleton="true" />
-
-    <extension
-        type="transapps.maps.plugin.tool.ToolDescriptor"
-        impl="com.sync.tak.plugin.PluginTool"
-        singleton="true" />
-
 </plugin>
