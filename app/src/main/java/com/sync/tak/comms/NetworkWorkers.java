@@ -238,10 +238,21 @@ public class NetworkWorkers {
 
         if (prefs != null) {
             switch (prefs.getString("uniqueIdMethod", "Globally-Unique ID")) {
-                case "Globally-Unique ID" -> str = prefs.getString("GUIDPrefix", "");
-                case "Android ID" -> str = prefs.getString("AndroidIDPrefix", "");
-                case "Firebase IID" -> str = prefs.getString("FirebaseIIDPrefix", "");
-                case "Device MAC ID" -> str = prefs.getString("MacIDPrefix", "");
+                case "Globally-Unique ID":
+                    str = prefs.getString("GUIDPrefix", "");
+                    break;
+
+                case "Android ID":
+                    str = prefs.getString("AndroidIDPrefix", "");
+                    break;
+
+                case "Firebase IID":
+                    str = prefs.getString("FirebaseIIDPrefix", "");
+                    break;
+
+                case "Device MAC ID":
+                    str = prefs.getString("MacIDPrefix", "");
+                    break;
             }
             return str;
         }

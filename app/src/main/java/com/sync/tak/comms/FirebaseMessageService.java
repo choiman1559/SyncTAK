@@ -158,24 +158,24 @@ public class FirebaseMessageService extends FirebaseMessagingService {
 
     public void processReception(Map<String, String> map, Context context) {
         switch (Objects.requireNonNull(map.get("type"))) {
-            case "cot_message" -> {
+            case "cot_message":
                 String cotMessage = map.get("cot_data");
                 if(!isDeviceItself(context, map)) {
                     CoTTransmittingReceiver.sendBroadcastReceive(context, cotMessage);
                 }
-            }
+                break;
 
-            case "startup" -> {
+            case "startup":
                 if(isDeviceItself(context, map)) {
                     NetworkProvider.fcmIgnitionComplete();
                 }
-            }
+                break;
 
-            case "split_data" -> {
+            case "split_data":
                 if(!isDeviceItself(context, map)) {
                     processSplitData(map, context);
                 }
-            }
+                break;
         }
     }
 

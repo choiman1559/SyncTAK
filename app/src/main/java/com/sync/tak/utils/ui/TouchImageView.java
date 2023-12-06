@@ -71,12 +71,13 @@ public class TouchImageView extends AppCompatImageView implements GestureDetecto
             PointF curr = new PointF(event.getX(), event.getY());
 
             switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN -> {
+                case MotionEvent.ACTION_DOWN:
                     last.set(curr);
                     start.set(last);
                     mode = DRAG;
-                }
-                case MotionEvent.ACTION_MOVE -> {
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
                     if (mode == DRAG) {
                         float deltaX = curr.x - last.x;
                         float deltaY = curr.y - last.y;
@@ -88,15 +89,19 @@ public class TouchImageView extends AppCompatImageView implements GestureDetecto
                         fixTrans();
                         last.set(curr.x, curr.y);
                     }
-                }
-                case MotionEvent.ACTION_UP -> {
+                    break;
+
+                case MotionEvent.ACTION_UP:
                     mode = NONE;
                     int xDiff = (int) Math.abs(curr.x - start.x);
                     int yDiff = (int) Math.abs(curr.y - start.y);
                     if (xDiff < CLICK && yDiff < CLICK)
                         performClick();
-                }
-                case MotionEvent.ACTION_POINTER_UP -> mode = NONE;
+                    break;
+
+                case MotionEvent.ACTION_POINTER_UP:
+                    mode = NONE;
+                    break;
             }
 
             setImageMatrix(matrix);

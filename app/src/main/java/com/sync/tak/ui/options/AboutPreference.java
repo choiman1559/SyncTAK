@@ -70,26 +70,30 @@ public class AboutPreference extends PreferenceFragmentCompat  {
     @Override
     public boolean onPreferenceTreeClick(@NonNull Preference preference) {
         super.onPreferenceTreeClick(preference);
+        MaterialAlertDialogBuilder dialog;
 
         switch (preference.getKey()) {
-            case "githubRepository" -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/choiman1559/SyncTAK")));
-            case "openSource" -> {
-                MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(mContext, R.style.Theme_App_Palette_Dialog));
+            case "githubRepository":
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/choiman1559/SyncTAK")));
+                break;
+
+            case "openSource":
+                dialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(mContext, R.style.Theme_App_Palette_Dialog));
                 dialog.setTitle("Open Source Licenses");
                 dialog.setMessage(R.string.ossl);
                 dialog.setIcon(R.drawable.ic_fluent_database_search_24_regular);
                 dialog.setPositiveButton("OK", (dialog1, which) -> { });
                 dialog.show();
-            }
+                break;
 
-            case "hammerNotice" -> {
-                MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(mContext, R.style.Theme_App_Palette_Dialog));
+            case "hammerNotice":
+                dialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(mContext, R.style.Theme_App_Palette_Dialog));
                 dialog.setTitle("US Government Legal Notice");
                 dialog.setMessage(R.string.hammerNotice);
                 dialog.setIcon(R.drawable.ic_fluent_database_search_24_regular);
                 dialog.setPositiveButton("OK", (dialog1, which) -> { });
                 dialog.show();
-            }
+                break;
         }
         return true;
     }

@@ -63,9 +63,17 @@ public class MainActivity extends MonetCompatActivity {
         @SuppressLint("NonConstantResourceId")
         View.OnClickListener onClickListener = v -> {
             switch (v.getId()) {
-                case R.id.GeneralPreferences -> startOptionActivity("General");
-                case R.id.InfoPreferences -> startOptionActivity("About");
-                case R.id.ProfilePreferences -> startActivity(new Intent(this, ProfileActivity.class));
+                case R.id.GeneralPreferences:
+                    startOptionActivity("General");
+                    break;
+
+                case R.id.InfoPreferences:
+                    startOptionActivity("About");
+                    break;
+
+                case R.id.ProfilePreferences:
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    break;
             }
         };
 

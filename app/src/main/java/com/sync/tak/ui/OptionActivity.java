@@ -32,18 +32,20 @@ public class OptionActivity extends AppCompatActivity {
             if (type != null) lastType = type;
 
             switch (lastType) {
-                case "General" -> {
+                case "General":
                     fragment = new GeneralPreference();
                     title = "General Options";
-                }
-                case "About" -> {
+                break;
+
+                case "About":
                     fragment = new AboutPreference();
                     title = "About SyncTAK";
-                }
-                default -> {
+                    break;
+
+                default:
                     fragment = null;
                     title = getString(R.string.app_name);
-                }
+                    break;
             }
         }
 

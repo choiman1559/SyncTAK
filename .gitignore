@@ -18,3 +18,4 @@ local.properties
 /aars/takdevlint.aar
 /.takdev/
 /app/civ/release/
+/*.hprof
