@@ -115,6 +115,8 @@ android {
     namespace 'com.sync.tak'
     //flavorDimensions
 
+    def pluginApiFlavor = "CIV"
+
     bundle {
         storeArchive {
             enable = false
@@ -167,7 +169,7 @@ android {
                 matchingFallbacks = ['civ']
 
                 // set the api version information
-                def pluginApiFlavor = flav.name.equals('gov') ? 'CIV' : "${flav.name.toUpperCase()}"
+                pluginApiFlavor = flav.name.equals('gov') ? 'CIV' : "${flav.name.toUpperCase()}"
                 manifestPlaceholders = [atakApiVersion: "com.atakmap.app@" + ATAK_VERSION + ".CIV"]
 
                 // additional variables associated with the flav can be set here once defined above
@@ -195,7 +197,7 @@ android {
             // name logic to provide for consistency within the community.
             setProperty("archivesBaseName", "ATAK-Plugin-" + rootProject.name + "-" + PLUGIN_VERSION + "-" + getVersionName() + "-" + ATAK_VERSION)
             defaultConfig.versionCode = getVersionCode()
-            defaultConfig.versionName = PLUGIN_VERSION + " (" + getVersionName() + ") - [" + ATAK_VERSION + "]"
+            defaultConfig.versionName = PLUGIN_VERSION + " (" + getVersionName() + ") - [" + ATAK_VERSION + "." + /* pluginApiFlavor */ "CIV" + "]"
         }
 
         debug.setRoot('build-types/debug')

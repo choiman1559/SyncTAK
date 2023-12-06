@@ -24,7 +24,7 @@
         android:theme="@style/Theme.App.Palette"
         tools:ignore="DataExtractionRules">
 
-        <meta-data android:name="plugin-api" android:value="com.atakmap.app@4.10.0.CIV"/>
+        <meta-data android:name="plugin-api" android:value="${atakApiVersion}"/>
         <meta-data android:name="app_desc" android:value="@string/app_desc"/>
 
         <activity

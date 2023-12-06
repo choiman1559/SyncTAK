@@ -19,6 +19,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 import com.sync.tak.Application;
@@ -76,6 +77,9 @@ public class NetSelectActivity extends AppCompatActivity {
                 FcmHolder.setRadioChecked(true);
             }
         }
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener((v) -> this.finish());
     }
 
     static class RadioObject {

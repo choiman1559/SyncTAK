@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.atakmap.android.ipc.AtakBroadcast;
 import com.sync.tak.receivers.CoTTransmittingReceiver;
 import com.sync.tak.CoTPositionTool;
 
@@ -148,7 +149,7 @@ public class ModemCotUtility extends DropDownReceiver implements DropDown.OnStat
         android.util.Log.d(TAG, "stopListener: ");
         CoTTransmittingReceiver.mOnMessageReceiveListener = null;
         CoTTransmittingReceiver.onMetaDataReceiveListener = null;
-        context.unregisterReceiver(coTTransmittingReceiver);
+        AtakBroadcast.getInstance().unregisterSystemReceiver(coTTransmittingReceiver);
     }
 
     public void parseCoT(String message) {

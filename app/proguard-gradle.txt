@@ -6,7 +6,7 @@
 # we need line numbers in our stack traces otherwise they are pretty useless
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
--repackageclasses atakplugin.PluginTemplate
+-repackageclasses atakplugin.SyncTAK
 
 -keepattributes *Annotation*
 -keepattributes Signature, InnerClasses
@@ -121,3 +121,12 @@
 -dontwarn org.gradle.api.artifacts.Dependency
 -dontwarn org.gradle.api.artifacts.ResolveException
 -dontwarn org.gradle.api.artifacts.repositories.MavenArtifactRepository
+-dontwarn android.support.v4.app.DialogFragment
+-dontwarn android.support.v4.app.Fragment
+-dontwarn android.support.v4.app.FragmentActivity
+-dontwarn android.support.v4.app.FragmentManager
+-dontwarn android.support.v4.app.FragmentTransaction
+-dontwarn java.beans.Transient
+-dontwarn org.apache.commons.io.IOUtils
+-dontwarn org.gradle.api.Task
+-dontwarn org.gradle.api.tasks.TaskAction
