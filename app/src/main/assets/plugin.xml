@@ -3,6 +3,6 @@
 <plugin>
     <extension
         type="gov.tak.api.plugin.IPlugin"
-        impl="com.sync.tak.plugin.PluginLifecycle"
+        impl="com.sync.tak.plugin.AtakPluginLifecycle"
         singleton="true" />
 </plugin>

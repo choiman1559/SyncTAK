@@ -12,12 +12,12 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import gov.tak.api.util.Disposable;
 
-public class PluginTool extends AbstractPluginTool implements Disposable {
+public class AtakPluginTool extends AbstractPluginTool implements Disposable {
 
     @SuppressLint("StaticFieldLeak")
     public Intent intent;
 
-    public PluginTool(Context context) {
+    public AtakPluginTool(Context context) {
         super(context,
                 context.getString(R.string.app_name),
                 context.getString(R.string.app_desc),

@@ -9,7 +9,7 @@ import android.content.Context;
 /**
  * Boilerplate code for loading native.
  */
-public class PluginNativeLoader {
+public class AtakPluginNativeLoader {
 
     private static String ndl = null;
 

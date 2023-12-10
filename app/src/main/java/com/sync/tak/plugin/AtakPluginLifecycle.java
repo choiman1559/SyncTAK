@@ -18,16 +18,16 @@ import android.content.Context;
 
 import gov.tak.api.plugin.IServiceController;
 
-public class PluginLifecycle extends AbstractPlugin {
+public class AtakPluginLifecycle extends AbstractPlugin {
     private final Collection<MapComponent> overlays;
     private final MapView mapView;
     @SuppressLint("StaticFieldLeak")
     public static Context activity;
 
-    private final static String TAG = PluginLifecycle.class.getSimpleName();
+    private final static String TAG = AtakPluginLifecycle.class.getSimpleName();
 
-    public PluginLifecycle(IServiceController serviceController) {
-        super(serviceController, new PluginTool(serviceController.getService(PluginContextProvider.class).getPluginContext()), new CoTUtilityMapComponent());
+    public AtakPluginLifecycle(IServiceController serviceController) {
+        super(serviceController, new AtakPluginTool(serviceController.getService(PluginContextProvider.class).getPluginContext()), new CoTUtilityMapComponent());
         this.overlays = new LinkedList<>();
         this.mapView = null;
 
@@ -40,14 +40,14 @@ public class PluginLifecycle extends AbstractPlugin {
     @Override
     public void onStart() {
         super.onStart();
-        PluginLifecycle.this.overlays.add(new CoTUtilityMapComponent());
+        AtakPluginLifecycle.this.overlays.add(new CoTUtilityMapComponent());
 
-        Iterator<MapComponent> iter = PluginLifecycle.this.overlays.iterator();
+        Iterator<MapComponent> iter = AtakPluginLifecycle.this.overlays.iterator();
         MapComponent c;
         while (iter.hasNext()) {
             c = iter.next();
             try {
-                c.onCreate(activity, ((Activity) activity).getIntent(), PluginLifecycle.this.mapView);
+                c.onCreate(activity, ((Activity) activity).getIntent(), AtakPluginLifecycle.this.mapView);
             } catch (Exception e) {
                 Log.w(TAG, "Unhandled exception trying to create overlays MapComponent", e);
                 iter.remove();
