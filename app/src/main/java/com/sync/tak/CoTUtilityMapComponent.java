@@ -44,7 +44,7 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
 
         DocumentedIntentFilter ddFilter = new DocumentedIntentFilter();
         ddFilter.addAction(CoTUtilityDropDownReceiver.SHOW_PLUGIN);
-        registerDropDownReceiver(ddr, ddFilter);
+        this.registerDropDownReceiver(ddr, ddFilter);
 
         CotUtil.setCotEventListener(this);
 
@@ -54,7 +54,7 @@ public class CoTUtilityMapComponent extends DropDownMapComponent implements CotU
         DocumentedIntentFilter filter = new DocumentedIntentFilter();
         filter.addAction("com.sync.tak.receivers.cotMenu", "this intent launches the cot send utility",
                 new DocumentedExtra[] { new DocumentedExtra("targetUID", "the map item identifier used to populate the drop down")});
-        registerDropDownReceiver(modemCotUtility, filter);
+        this.registerDropDownReceiver(modemCotUtility, filter);
         modemCotUtility.startListener();
 
         SendChatDropDownReceiver sendChatDropDownReceiver = new SendChatDropDownReceiver(view, context);

@@ -1,6 +1,7 @@
 -dontskipnonpubliclibraryclasses
 -dontshrink
 -dontoptimize
+-dontpreverify
 
 ############### ACRA specifics
 # we need line numbers in our stack traces otherwise they are pretty useless
@@ -13,6 +14,22 @@
 
 -keep class *
 -keep class com.sync.tak.*
+
+-keepclasseswithmembernames class * {
+    public <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    protected <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    private <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    <methods>;
+}
 
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
@@ -46,7 +63,18 @@
 
 -keep class * extends transapps.maps.plugin.tool.Tool {
 }
--keep class * implements transapps.maps.plugin.lifecycle.Lifecycle {
+-keep class * implements gov.tak.api.plugin.IPlugin {
+}
+-keep class * extends com.atak.plugins.impl.AbstractPluginTool {
+}
+
+# overcome an existing bug in the gradle subsystem (3.5.x)
+-keep,allowobfuscation @interface gov.tak.api.annotation.DontObfuscate
+
+# Do not strip any method/class that is annotated with @DontObfuscate
+-keep @gov.tak.api.annotation.DontObfuscate class * {*;}
+-keepclassmembers class * {
+    @gov.tak.api.annotation.DontObfuscate *;
 }
 
 # This is generated automatically by the Android Gradle plugin.
