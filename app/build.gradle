@@ -8,6 +8,7 @@
 
 buildscript {
 
+    ext.PLUGIN_VERSION_CODE = 010002
     ext.PLUGIN_VERSION = "1.0.2"
     ext.ATAK_VERSION = "4.10.0"
 
@@ -206,8 +207,8 @@ android {
             // It is strongly encouraged that plugin developers do not modify the archiveBaseName, version code logic and version
             // name logic to provide for consistency within the community.
             setProperty("archivesBaseName", "ATAK-Plugin-" + rootProject.name + "-" + PLUGIN_VERSION + "-" + getVersionName() + "-" + ATAK_VERSION)
-            defaultConfig.versionCode = getVersionCode()
-            defaultConfig.versionName = PLUGIN_VERSION + " (" + getVersionName() + ") - [" + ATAK_VERSION + "." + /* pluginApiFlavor */ "CIV" + "]"
+            defaultConfig.versionCode = PLUGIN_VERSION_CODE
+            defaultConfig.versionName = PLUGIN_VERSION + " - [" + ATAK_VERSION + "." + /* pluginApiFlavor */ "CIV" + "]"
         }
 
         debug.setRoot('build-types/debug')
