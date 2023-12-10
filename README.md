@@ -6,6 +6,7 @@ An SyncTAK is a software compilibility layer for the Android Team Awareness Kit 
 
 ## Features
 
+- No Radio Needed: The only thing you need to communicate is just Internet connection! (This app uses ![FCM](https://firebase.google.com/docs/cloud-messaging?hl=ko) to communicate)
 - Military-Grade AES-256-CBC (PKCS5Padding) then HMAC-SHA-256 Encryption
 - Abbreviate & Non-Abbreviate COT Switch
 - Communication Groupping with Muilitple Profile (Communication possible only between groups of the same group: extension of FCM’s Topic function)
