@@ -12,9 +12,6 @@
 -keepattributes *Annotation*
 -keepattributes Signature, InnerClasses
 
--keep class *
--keep class com.sync.tak.*
-
 -keepclasseswithmembernames class * {
     public <methods>;
 }
