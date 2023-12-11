@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sync.tak.Application;
-import com.sync.tak.plugin.AtakPluginLifecycle;
+import com.atakmap.android.synctak.plugin.AtakPluginLifecycle;
 import com.sync.tak.R;
 import com.atakmap.android.dropdown.DropDownReceiver;
 import com.atakmap.android.gui.PluginSpinner;

@@ -1,4 +1,4 @@
-package com.sync.tak.plugin;
+package com.atakmap.android.synctak.plugin;
 
 import com.atak.plugins.impl.AbstractPluginTool;
 import com.sync.tak.R;

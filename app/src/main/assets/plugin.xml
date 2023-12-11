@@ -3,6 +3,6 @@
 <plugin>
     <extension
         type="gov.tak.api.plugin.IPlugin"
-        impl="com.sync.tak.plugin.AtakPluginLifecycle"
+        impl="com.atakmap.android.synctak.plugin.AtakPluginLifecycle"
         singleton="true" />
 </plugin>

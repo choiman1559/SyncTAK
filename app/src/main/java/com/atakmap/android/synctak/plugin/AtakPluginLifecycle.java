@@ -1,5 +1,5 @@
 
-package com.sync.tak.plugin;
+package com.atakmap.android.synctak.plugin;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -27,7 +27,7 @@ public class AtakPluginLifecycle extends AbstractPlugin {
     private final static String TAG = AtakPluginLifecycle.class.getSimpleName();
 
     public AtakPluginLifecycle(IServiceController serviceController) {
-        super(serviceController, new AtakPluginTool(serviceController.getService(PluginContextProvider.class).getPluginContext()), new CoTUtilityMapComponent());
+        super(serviceController, new AtakPluginTool(((PluginContextProvider) serviceController.getService(PluginContextProvider.class)).getPluginContext()), (MapComponent) new CoTUtilityMapComponent());
         this.overlays = new LinkedList<>();
         this.mapView = null;
 

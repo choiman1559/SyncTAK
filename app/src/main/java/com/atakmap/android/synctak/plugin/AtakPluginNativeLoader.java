@@ -1,5 +1,5 @@
 
-package com.sync.tak.plugin;
+package com.atakmap.android.synctak.plugin;
 
 import java.io.File;
 
